@@ -4,13 +4,23 @@
   <meta charset="UTF-8" />
   <title>Evaluación TIC - SENA</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
-  <script>
-    (function () {
-      emailjs.init("cEPkMysvZf_jN9GDL"); // Reemplaza esto con tu User ID de EmailJS
-    })();
-  </script>
+<script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+<script type="text/javascript">
+   (function(){
+      emailjs.init({
+        publicKey: "cEPkMysvZf_jN9GDL",
+      });
+   })();
+</script>
+
+
+
+
+  
+ 
   <style>
     body {
       font-family: Arial;
