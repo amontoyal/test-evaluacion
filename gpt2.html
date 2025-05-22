@@ -104,19 +104,20 @@
       const reader = new FileReader();
       reader.onloadend = async () => {
         try {
-          await emailjs.send("service_SENA", "Gmail", {
-            to_email: "tec_alejus@hotmail.com",
-            from_name: data.get('nombre'),
-            subject: "Resultados Test TIC",
-            message: `Resultados del estudiante ${data.get('nombre')}`,
-            pdf_base64: reader.result.split(',')[1],
-            filename: `Test_TIC_${data.get('cedula')}.pdf`
-          });
-          alert("Resultados enviados correctamente.");
-        } catch (error) {
-          alert("Error al enviar el correo.");
-          console.error(error);
-        }
+  const result = await emailjs.send("service_SENA", "Gmail", {
+    to_email: "tec_alejus@hotmail.com",
+    from_name: data.get('nombre'),
+    subject: "Resultados Test TIC",
+    message: `Resultados del estudiante ${data.get('nombre')}`,
+    pdf_base64: reader.result.split(',')[1],
+    filename: `Test_TIC_${data.get('cedula')}.pdf`
+  });
+  alert("Resultados enviados correctamente.");
+  console.log("EmailJS response:", result);
+} catch (error) {
+  alert("Error al enviar el correo.");
+  console.error("EmailJS error:", error);
+}
       };
 
       reader.readAsDataURL(pdfBlob);
