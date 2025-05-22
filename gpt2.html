@@ -104,7 +104,7 @@
       const reader = new FileReader();
       reader.onloadend = async () => {
         try {
-  const result = await emailjs.send("service_SENA", "Gmail", {
+  const result = await emailjs.send("service_SENA", "template_tnja268", {
     to_email: "tec_alejus@hotmail.com",
     from_name: data.get('nombre'),
     subject: "Resultados Test TIC",
