@@ -2,136 +2,119 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Evaluación TIC - SENA</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-<script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-</script>
-<script type="text/javascript">
-   (function(){
-      emailjs.init({
-        publicKey: "cEPkMysvZf_jN9GDL",
-      });
-   })();
-</script>
-
-
-
-
-  
- 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test TIC - Envío PDF</title>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <style>
-    body {
-      font-family: Arial;
-      margin: 30px;
-      max-width: 800px;
-    }
-    label, select, input, textarea {
-      display: block;
-      margin: 10px 0;
-      width: 100%;
-    }
-    .question {
-      margin-bottom: 20px;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-    }
+    body { font-family: Arial, sans-serif; padding: 2rem; background: #f0f4f8; }
+    form { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-width: 600px; margin: auto; }
+    label, select, input { display: block; margin-top: 1rem; width: 100%; }
+    button { margin-top: 2rem; padding: 1rem; background: #007bff; color: white; border: none; border-radius: 5px; font-size: 16px; }
   </style>
 </head>
 <body>
 
-  <h1>Evaluación TIC</h1>
+  <form id="formulario">
+    <h2>Datos del estudiante</h2>
 
-  <form id="testForm">
-    <label>Fecha: <input type="date" name="fecha" required></label>
-    <label>Cédula: <input type="text" name="cedula" required></label>
-    <label>Nombre: <input type="text" name="nombre" required></label>
-    <label>Ficha: <input type="text" name="ficha" required></label>
+    <label for="fecha">Fecha</label>
+    <input type="date" name="fecha" required />
 
-    <label>Programa de Formación:
-      <select name="programa" required>
-        <option value="">Seleccione...</option>
-        <option>ANÁLISIS Y DESARROLLO DE SISTEMAS DE INFORMACIÓN</option>
-        <option>CARPINTERÍA DE ALUMINIO</option>
-        <option>CATASTRO</option>
-        <option>CONSTRUCCIÓN DE EDIFICACIONES</option>
-        <option>CONTROL AMBIENTAL</option>
-        <!-- Puedes agregar más opciones aquí -->
-      </select>
-    </label>
+    <label for="cedula">Cédula</label>
+    <input type="text" name="cedula" required />
 
-    <div class="question">
-      <label>1. ¿Qué es un sistema operativo?</label>
-      <select name="p1">
-        <option>Un programa para dibujar</option>
-        <option>Un software que gestiona recursos del sistema</option>
-        <option>Una hoja de cálculo</option>
-      </select>
-    </div>
+    <label for="nombre">Nombre</label>
+    <input type="text" name="nombre" required />
 
-    <!-- Agrega más preguntas aquí -->
+    <label for="nota">Nota</label>
+    <input type="number" name="nota" step="0.01" min="0" max="100" required />
+
+    <label for="programa">Programa de formación</label>
+    <select name="programa" required>
+      <option value="">Seleccione...</option>
+      <option>ANÁLISIS Y DESARROLLO DE SISTEMAS DE INFORMACIÓN</option>
+      <option>CARPINTERÍA DE ALUMINIO</option>
+      <option>CATASTRO</option>
+      <option>CONSTRUCCIÓN DE EDIFICACIONES</option>
+      <option>CONSTRUCCIÓN DE ESTRUCTURAS EN CONCRETO</option>
+      <option>CONSTRUCCIÓN DE VÍAS</option>
+      <option>CONSTRUCCIÓN EN EDIFICACIONES</option>
+      <option>CONSTRUCCIONES LIVIANAS EN SECO</option>
+      <option>CONSTRUCCIONES LIVIANAS INDUSTRIALIZADAS EN SECO</option>
+      <option>CONTROL AMBIENTAL</option>
+      <option>DESARROLLO GRÁFICO DE PROYECTOS DE ARQUITECTURA E INGENIERÍA</option>
+      <option>DIBUJO ARQUITECTÓNICO</option>
+      <option>DIBUJO Y MODELADO ARQUITECTÓNICO Y DE INGENIERÍA</option>
+      <option>GESTIÓN DE LA SEGURIDAD Y SALUD EN EL TRABAJO</option>
+      <option>GESTIÓN DE PROYECTOS DE DESARROLLO ECONÓMICO Y SOCIAL</option>
+      <option>GESTIÓN PARA EL SUMINISTRO GASES COMBUSTIBLES Y NO COMBUSTIBLES</option>
+      <option>INSTALACIÓN DE SISTEMAS ELÉCTRICOS RESIDENCIALES Y COMERCIALES</option>
+      <option>INSTALACIONES ELÉCTRICAS RESIDENCIALES</option>
+      <option>INSTALACIONES PARA SUMINISTRO DE GAS COMBUSTIBLE EN EDIFICACIONES RESIDENCIALES Y COMERCIALES</option>
+      <option>MAMPOSTERÍA</option>
+      <option>MANEJO AMBIENTAL</option>
+      <option>MANEJO DE VIVEROS</option>
+      <option>MANTENIMIENTO E INSTALACIÓN DE SISTEMAS SOLARES FOTOVOLTAICOS</option>
+      <option>MANTENIMIENTO Y REPARACIÓN DE EDIFICACIONES</option>
+      <option>MONITOREO AMBIENTAL</option>
+      <option>OPERACIÓN DE MAQUINARIA PESADA PARA EXCAVACIÓN</option>
+      <option>OPERACIÓN DE SISTEMAS DE POTABILIZACIÓN DE AGUA</option>
+      <option>OPERACIÓN DE SISTEMAS DE TRATAMIENTO DE VERTIMIENTOS LÍQUIDOS</option>
+      <option>GESTIÓN EFICIENTE DE LA ENERGÍA</option>
+      <option>COORDINACIÓN DE PROCESOS LOGÍSTICOS</option>
+      <option>SOPORTE DE TOPOGRAFÍA Y GEOREFERENCIACION</option>
+      <option>DESARROLLO PUBLICITARIO</option>
+      <option>PINTURA ARQUITECTÓNICA Y ACABADOS ESPECIALES</option>
+    </select>
+
+    <label for="ficha">Ficha</label>
+    <input type="text" name="ficha" required />
 
     <button type="submit">Enviar resultados</button>
   </form>
 
   <script>
-    document.getElementById('testForm').addEventListener('submit', async function (e) {
-      e.preventDefault();
-      const form = e.target;
-      const data = new FormData(form);
+    emailjs.init("cEPkMysvZf_jN9GDL"); // tu User ID
 
+    document.getElementById('formulario').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const data = new FormData(this);
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
+
       doc.text('Resultados del Test TIC', 10, 10);
       doc.text(`Fecha: ${data.get('fecha')}`, 10, 20);
-      doc.text(`Cédula: ${data.get('cedula')}`, 10, 30);
-      doc.text(`Nombre: ${data.get('nombre')}`, 10, 40);
+      doc.text(`Nombre: ${data.get('nombre')}`, 10, 30);
+      doc.text(`Cédula: ${data.get('cedula')}`, 10, 40);
       doc.text(`Ficha: ${data.get('ficha')}`, 10, 50);
       doc.text(`Programa: ${data.get('programa')}`, 10, 60);
+      doc.text(`Nota: ${data.get('nota')}`, 10, 70);
 
-      let y = 70;
-      let nota = 0;
-      const respuestasCorrectas = {
-        p1: 'Un software que gestiona recursos del sistema',
-        // p2: '...', etc. para preguntas adicionales
-      };
-
-      for (let [clave, valor] of data.entries()) {
-        if (clave.startsWith('p')) {
-          doc.text(`Pregunta ${clave.slice(1)}: ${valor}`, 10, y);
-          if (valor === respuestasCorrectas[clave]) nota++;
-          y += 10;
-        }
-      }
-
-      const puntaje = ((nota / Object.keys(respuestasCorrectas).length) * 100).toFixed(2);
-      doc.text(`Nota final: ${puntaje}`, 10, y + 10);
-
-      const pdfBlob = doc.output('blob');
-
+      const blob = doc.output('blob');
       const reader = new FileReader();
+
       reader.onloadend = async () => {
+        const base64 = reader.result.split(',')[1]; // Elimina encabezado base64
+
         try {
-  const result = await emailjs.send("service_SENA", "template_tnja268", {
-    to_email: "tec_alejus@hotmail.com",
-    from_name: data.get('nombre'),
-    subject: "Resultados Test TIC",
-    message: `Resultados del estudiante ${data.get('nombre')}`,
-    pdf_base64: reader.result.split(',')[1],
-    filename: `Test_TIC_${data.get('cedula')}.pdf`
-  });
-  alert("Resultados enviados correctamente.");
-  console.log("EmailJS response:", result);
-} catch (error) {
-  alert("Error al enviar el correo.");
-  console.error("EmailJS error:", error);
-}
+          await emailjs.send("service_SENA", "template_tnja268", {
+            to_email: "tec_alejus@hotmail.com",
+            from_name: data.get('nombre'),
+            subject: "Resultados Test TIC",
+            message: `Resultados del estudiante ${data.get('nombre')}`,
+            pdf_base64: base64,
+            filename: `Test_TIC_${data.get('cedula')}.pdf`
+          });
+          alert("Correo enviado con el PDF adjunto.");
+        } catch (err) {
+          alert("Fallo al enviar el correo.");
+          console.error(err);
+        }
       };
 
-      reader.readAsDataURL(pdfBlob);
+      reader.readAsDataURL(blob);
     });
   </script>
 
