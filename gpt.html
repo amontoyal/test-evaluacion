@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evaluación TIC</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .pregunta-invalida {
+      border: 2px solid red;
+      border-radius: 5px;
+      padding: 10px;
+      background-color: #ffe6e6;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center mb-4">Test de Competencias TIC</h1>
+    <form id="testForm">
+      <div class="mb-3">
+        <label for="fecha" class="form-label">Fecha</label>
+        <input type="date" class="form-control" id="fecha" required>
+      </div>
+      <div class="mb-3">
+        <label for="cedula" class="form-label">Cédula</label>
+        <input type="text" class="form-control" id="cedula" required>
+      </div>
+      <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre completo</label>
+        <input type="text" class="form-control" id="nombre" required>
+      </div>
+      <div class="mb-3">
+        <label for="programa" class="form-label">Programa de formación</label>
+        <select class="form-select" id="programa" required>
+          <option value="">Seleccione un programa</option>
+          <option>ANÁLISIS Y DESARROLLO DE SISTEMAS DE INFORMACIÓN</option>
+          <option>CARPINTERÍA DE ALUMINIO</option>
+          <option>CATASTRO</option>
+          <option>CONSTRUCCIÓN DE EDIFICACIONES</option>
+          <option>CONSTRUCCIÓN DE ESTRUCTURAS EN CONCRETO</option>
+          <option>CONSTRUCCIÓN DE VÍAS</option>
+          <option>CONSTRUCCIÓN EN EDIFICACIONES</option>
+          <option>CONSTRUCCIONES LIVIANAS EN SECO</option>
+          <option>CONSTRUCCIONES LIVIANAS INDUSTRIALIZADAS EN SECO</option>
+          <option>CONTROL AMBIENTAL</option>
+          <option>DESARROLLO GRÁFICO DE PROYECTOS DE ARQUITECTURA E INGENIERÍA</option>
+          <option>DIBUJO ARQUITECTÓNICO</option>
+          <option>DIBUJO Y MODELADO ARQUITECTÓNICO Y DE INGENIERÍA</option>
+          <option>GESTIÓN DE LA SEGURIDAD Y SALUD EN EL TRABAJO</option>
+          <option>GESTIÓN DE PROYECTOS DE DESARROLLO ECONÓMICO Y SOCIAL</option>
+          <option>GESTIÓN PARA EL SUMINISTRO GASES COMBUSTIBLES Y NO COMBUSTIBLES</option>
+          <option>INSTALACIÓN DE SISTEMAS ELÉCTRICOS RESIDENCIALES Y COMERCIALES</option>
+          <option>INSTALACIONES ELÉCTRICAS RESIDENCIALES</option>
+          <option>INSTALACIONES PARA SUMINISTRO DE GAS COMBUSTIBLE EN EDIFICACIONES RESIDENCIALES Y COMERCIALES</option>
+          <option>MAMPOSTERÍA</option>
+          <option>MANEJO AMBIENTAL</option>
+          <option>MANEJO DE VIVEROS</option>
+          <option>MANTENIMIENTO E INSTALACIÓN DE SISTEMAS SOLARES FOTOVOLTAICOS</option>
+          <option>MANTENIMIENTO Y REPARACIÓN DE EDIFICACIONES</option>
+          <option>MONITOREO AMBIENTAL</option>
+          <option>OPERACIÓN DE MAQUINARIA PESADA PARA EXCAVACIÓN</option>
+          <option>OPERACIÓN DE SISTEMAS DE POTABILIZACIÓN DE AGUA</option>
+          <option>OPERACIÓN DE SISTEMAS DE TRATAMIENTO DE VERTIMIENTOS LÍQUIDOS</option>
+          <option>GESTIÓN EFICIENTE DE LA ENERGÍA</option>
+          <option>COORDINACIÓN DE PROCESOS LOGÍSTICOS</option>
+          <option>SOPORTE DE TOPOGRAFÍA Y GEOREFERENCIACION</option>
+          <option>DESARROLLO PUBLICITARIO</option>
+          <option>PINTURA ARQUITECTÓNICA Y ACABADOS ESPECIALES</option>
+        </select>
+      </div>
+
+      <div id="questions"></div>
+
+      <button type="submit" class="btn btn-primary">Enviar respuestas</button>
+    </form>
+    <div id="resultado" class="mt-4"></div>
+  </div>
+
+  <script>
+    const preguntas = [
+      { id: 1, texto: "¿Cuál es la función principal del sistema operativo?", opciones: ["Ejecutar aplicaciones web", "Administrar los recursos del sistema", "Diseñar páginas web", "Controlar el hardware desde la nube"], correcta: 1 },
+      { id: 2, texto: "¿Qué fórmula en Excel suma los valores de las celdas A1 a A10?", opciones: ["=SUMA(A1:A10)", "=TOTAL(A1:A10)", "=AGREGAR(A1:A10)", "=CONTAR(A1:A10)"], correcta: 0 },
+      { id: 3, texto: "¿Cuál de los siguientes dispositivos es un periférico de entrada?", opciones: ["Monitor", "Impresora", "Teclado", "Proyector"], correcta: 2 },
+      { id: 4, texto: "¿Qué extensión corresponde a un archivo de PowerPoint?", opciones: [".pptx", ".xlsx", ".docx", ".pdf"], correcta: 0 },
+      { id: 5, texto: "¿Cuál es la función de un navegador web?", opciones: ["Proteger la red local", "Editar imágenes", "Acceder a páginas de internet", "Programar aplicaciones"], correcta: 2 },
+      { id: 6, texto: "¿Qué tipo de software es Microsoft Word?", opciones: ["Sistema operativo", "Aplicación de procesamiento de texto", "Base de datos", "Antivirus"], correcta: 1 },
+      { id: 7, texto: "¿Qué significa TIC?", opciones: ["Tareas de Interés Común", "Tecnologías de la Información y la Comunicación", "Técnicas de Internet y Computación", "Transferencia de Información por Computadora"], correcta: 1 },
+      { id: 8, texto: "¿Cuál es una característica del software libre?", opciones: ["Es gratuito pero con licencia propietaria", "Permite modificar el código fuente", "Es exclusivo de Windows", "No se puede distribuir"], correcta: 1 },
+      { id: 9, texto: "¿Cuál de estas opciones representa una nube pública?", opciones: ["Google Drive", "Disco duro externo", "USB", "CD-ROM"], correcta: 0 },
+      { id: 10, texto: "¿Cuál es la fórmula correcta para contar celdas no vacías en Excel de B1 a B10?", opciones: ["=CONTAR(B1:B10)", "=CONTARA(B1:B10)", "=CUENTA(B1:B10)", "=NO.VACIAS(B1:B10)"], correcta: 1 }
+    ];
+
+    const questionsDiv = document.getElementById("questions");
+    preguntas.forEach((p, index) => {
+      const div = document.createElement("div");
+      div.className = "question";
+      div.id = `pregunta-${p.id}`;
+      div.innerHTML = `
+        <label class="form-label"><strong>${index + 1}. ${p.texto}</strong></label>
+        ${p.opciones.map((opt, i) => `
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="q${p.id}" value="${i}" required>
+            <label class="form-check-label">${opt}</label>
+          </div>`).join('')}
+      `;
+      questionsDiv.appendChild(div);
+    });
+
+    document.getElementById("testForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      let valid = true;
+      preguntas.forEach(p => {
+        const inputs = document.getElementsByName(`q${p.id}`);
+        const divPregunta = document.getElementById(`pregunta-${p.id}`);
+        let respondida = false;
+        for (let i = 0; i < inputs.length; i++) {
+          if (inputs[i].checked) {
+            respondida = true;
+            break;
+          }
+        }
+        if (!respondida) {
+          valid = false;
+          divPregunta.classList.add("pregunta-invalida");
+        } else {
+          divPregunta.classList.remove("pregunta-invalida");
+        }
+      });
+
+      if (!valid) {
+        document.getElementById("resultado").innerHTML = `<div class="alert alert-warning">Por favor responde todas las preguntas antes de enviar.</div>`;
+        return;
+      }
+
+      const formData = new FormData(this);
+      let puntaje = 0;
+
+      preguntas.forEach((p, index) => {
+        const respuesta = formData.get(`q${p.id}`);
+        const esCorrecta = parseInt(respuesta) === p.correcta;
+        formData.append(`pregunta_${p.id}`, p.texto);
+        formData.append(`respuesta_${p.id}`, p.opciones[respuesta]);
+        formData.append(`correcta_${p.id}`, esCorrecta ? "Correcta" : "Incorrecta");
+        if (esCorrecta) puntaje++;
+      });
+
+      formData.append("puntaje", puntaje);
+
+      fetch("https://script.google.com/macros/s/AKfycbyW6jEhHqJn7RvcE9j6fuiRxazCZCd-a0Zy0pt7qGEPxvybB7ybtJpPO9kfMzgs7rre/exec", {
+        method: "POST",
+        body: formData
+      })
+      .then(response => response.text())
+      .then(result => {
+        if (result.includes("ya has completado") || result.includes("Ya has completado")) {
+          document.getElementById("resultado").innerHTML = `<div class="alert alert-danger">${result}</div>`;
+        } else {
+          document.getElementById("resultado").innerHTML = `<div class="alert alert-success">${result}<br><strong>Puntaje obtenido:</strong> ${puntaje} / ${preguntas.length}</div>`;
+          document.getElementById("testForm").reset();
+          preguntas.forEach(p => document.getElementById(`pregunta-${p.id}`).classList.remove("pregunta-invalida"));
+        }
+      })
+      .catch(error => {
+        document.getElementById("resultado").innerHTML = `<div class="alert alert-danger">Error al enviar las respuestas: ${error}</div>`;
+      });
+    });
+  </script>
+</body>
+</html>
