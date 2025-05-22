@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Evaluación TIC - SENA</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    (function () {
+      emailjs.init("cEPkMysvZf_jN9GDL"); // Reemplaza esto con tu User ID de EmailJS
+    })();
+  </script>
+  <style>
+    body {
+      font-family: Arial;
+      margin: 30px;
+      max-width: 800px;
+    }
+    label, select, input, textarea {
+      display: block;
+      margin: 10px 0;
+      width: 100%;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Evaluación TIC</h1>
+
+  <form id="testForm">
+    <label>Fecha: <input type="date" name="fecha" required></label>
+    <label>Cédula: <input type="text" name="cedula" required></label>
+    <label>Nombre: <input type="text" name="nombre" required></label>
+    <label>Ficha: <input type="text" name="ficha" required></label>
+
+    <label>Programa de Formación:
+      <select name="programa" required>
+        <option value="">Seleccione...</option>
+        <option>ANÁLISIS Y DESARROLLO DE SISTEMAS DE INFORMACIÓN</option>
+        <option>CARPINTERÍA DE ALUMINIO</option>
+        <option>CATASTRO</option>
+        <option>CONSTRUCCIÓN DE EDIFICACIONES</option>
+        <option>CONTROL AMBIENTAL</option>
+        <!-- Puedes agregar más opciones aquí -->
+      </select>
+    </label>
+
+    <div class="question">
+      <label>1. ¿Qué es un sistema operativo?</label>
+      <select name="p1">
+        <option>Un programa para dibujar</option>
+        <option>Un software que gestiona recursos del sistema</option>
+        <option>Una hoja de cálculo</option>
+      </select>
+    </div>
+
+    <!-- Agrega más preguntas aquí -->
+
+    <button type="submit">Enviar resultados</button>
+  </form>
+
+  <script>
+    document.getElementById('testForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const form = e.target;
+      const data = new FormData(form);
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      doc.text('Resultados del Test TIC', 10, 10);
+      doc.text(`Fecha: ${data.get('fecha')}`, 10, 20);
+      doc.text(`Cédula: ${data.get('cedula')}`, 10, 30);
+      doc.text(`Nombre: ${data.get('nombre')}`, 10, 40);
+      doc.text(`Ficha: ${data.get('ficha')}`, 10, 50);
+      doc.text(`Programa: ${data.get('programa')}`, 10, 60);
+
+      let y = 70;
+      let nota = 0;
+      const respuestasCorrectas = {
+        p1: 'Un software que gestiona recursos del sistema',
+        // p2: '...', etc. para preguntas adicionales
+      };
+
+      for (let [clave, valor] of data.entries()) {
+        if (clave.startsWith('p')) {
+          doc.text(`Pregunta ${clave.slice(1)}: ${valor}`, 10, y);
+          if (valor === respuestasCorrectas[clave]) nota++;
+          y += 10;
+        }
+      }
+
+      const puntaje = ((nota / Object.keys(respuestasCorrectas).length) * 100).toFixed(2);
+      doc.text(`Nota final: ${puntaje}`, 10, y + 10);
+
+      const pdfBlob = doc.output('blob');
+
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        try {
+          await emailjs.send("service_SENA", "Gmail", {
+            to_email: "tec_alejus@hotmail.com",
+            from_name: data.get('nombre'),
+            subject: "Resultados Test TIC",
+            message: `Resultados del estudiante ${data.get('nombre')}`,
+            pdf_base64: reader.result.split(',')[1],
+            filename: `Test_TIC_${data.get('cedula')}.pdf`
+          });
+          alert("Resultados enviados correctamente.");
+        } catch (error) {
+          alert("Error al enviar el correo.");
+          console.error(error);
+        }
+      };
+
+      reader.readAsDataURL(pdfBlob);
+    });
+  </script>
+
+</body>
+</html>
